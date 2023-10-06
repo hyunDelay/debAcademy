@@ -1,0 +1,58 @@
+-- 커뮤니티
+
+DROP TABLE MEMBER;
+CREATE TABLE MEMBER(
+    NO NUMBER
+    , ID VARCHAR2(100)
+    , PWD VARCHAR2(100)
+    , NICK VARCHAR2(100)
+    , ENROLL_DATE TIMESTAMP
+    , QUIT_YN CHAR(1)
+);
+
+
+-- 회원가입
+INSERT INTO MEMBER(NO, ID, NICK, ENROLL_DATE, QUIT_YN) VALUES ('1', '유저입력ID', '유저입력PWD', '유저입력NICK', SYSDATE, 'N');
+-- 로그인
+SELECT * FROM MEMBER WHERE ID = '유저입력ID' AND PWD = '유저입력PWD';
+-- 비번변경
+UPDATE MEMBER 
+SET PWD = '유저입력 신규비밀번호'
+WHERE ID = '유저입력ID' AND PWD = '유저입력PWD';
+-- 닉네임 변경
+UPDATE MEMBER 
+SET NICK = '유저입력 바꿀 닉네임'
+WHERE PWD = '유저입력PWD';
+-- 탈퇴
+DELETE MEMBER WHERE ID = '유저입력ID' AND PWD = '유저입력PWD';
+-- 마이페이지 조회
+SELECT * FROM MEMBER WHERE ID = 로그인아이디;
+
+
+DROP TABLE BOARD;
+CREATE TABLE BOARD(
+    NO NUMBER
+    , TITLE VARCHAR2(100)
+    , CONTENT VARCHAR2(4000)
+    , WRITER VARCHAR2(100)
+    , ENROLL_DATE TIMESTAMP
+    , DEL_YN CHAR(1)
+);
+
+-- 게시글 작성
+INSERT INTO BOARD(NO, TITLE, WRITER, CONTENT, ENROLL_DATE, DEL_YN) 
+VALUES ('2', '제목입력', '작성자', '내용을 입력합니다.', SYSDATE, 'N');
+-- 게시글 전체 목록 조회 (게시글 제목, 작성일시, 작성자)
+SELECT TITLE, TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') 작성일, WRITER
+FROM BOARD;
+-- 게시글 상세조회
+SELECT TITLE, CONTENT, ENROLL_DATE, WRITER
+FROM BOARD
+WHERE NO = '1';
+-- 게시글 제목 및 내용 수정
+UPDATE BOARD 
+SET TITLE = '제목 바꿉니다.'
+    , CONTENT = '내용변경합니다'
+WHERE NAME = 'NAME';
+-- 게시글 삭제
+DELETE BOARD WHERE WRITER = '로그인된 작성자';
