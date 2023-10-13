@@ -1,0 +1,7 @@
+javaWorkspace/.metadata
+jdbcWorkspace/.metadata
+*.classpath
+*.project
+*.class
+**/.settings/
+**/bin/
