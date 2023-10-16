@@ -6,3 +6,4 @@ javaWorkspace/groupChat/.settings/
 .settings
 *.zip
 jdbcWorkspace/.metadata/
+*.class
