@@ -1,7 +1,8 @@
-javaWorkspace/.metadata
-jdbcWorkspace/.metadata
+/.metadata/
+javaWorkspace/.metadata/
 *.classpath
 *.project
-*.class
-**/.settings/
-**/bin/
+javaWorkspace/groupChat/.settings/
+.settings
+*.zip
+jdbcWorkspace/.metadata/
