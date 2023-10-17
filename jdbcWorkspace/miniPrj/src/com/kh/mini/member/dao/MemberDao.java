@@ -27,8 +27,6 @@ public class MemberDao {
 		pstmt.setString(3, vo.getNick());
 		int result = pstmt.executeUpdate();
 		
-		// rs
-		
 		// close
 		JDBCTemplate.close(conn);
 		
@@ -72,6 +70,21 @@ public class MemberDao {
 		JDBCTemplate.close(pstmt);
 		
 		return dbVo;
+	}
+
+	// 회원탈퇴
+	public int quit(Connection conn, String no) throws Exception {
+		
+		// sql
+		String sql = "UPDATE MEMBER SET DEL_YN = 'Y', MODIFY_DATE = SYSDATE WHERE NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, no);
+		int result = pstmt.executeUpdate();
+		
+		// close
+		JDBCTemplate.close(pstmt);
+		
+		return result;
 	}
 
 }
