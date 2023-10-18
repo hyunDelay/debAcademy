@@ -63,7 +63,15 @@ public class BoardService {
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// DAO
+		int result = dao.increaseHit(conn, num);
 		BoardVo vo = dao.boardDetailByNo(conn, num);
+		
+		// tx
+		if(result == 1) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
 		
 		// close
 		JDBCTemplate.close(conn);
