@@ -1,0 +1,31 @@
+@charset "utf-8";
+
+/* font-family */
+#ff01 {
+    font-family: '궁서체';
+}
+#ff02 {
+    font-family: '돋움체';
+}
+#ff03 {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: bisque;
+    margin: 0;
+    text-decoration: underline;
+    text-shadow: 1px 2px 9px rgba(0, 0, 0, .5);
+    font-style: oblique;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 2em;
+    font-weight: 900;
+    color: #f00;
+}
+#ta {
+    text-align: center;
+    line-height: 36px;
+}
+
+#lst {
+    list-style-type: lower-alpha;
+}

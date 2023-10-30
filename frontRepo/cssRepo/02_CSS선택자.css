@@ -1,0 +1,142 @@
+@charset "utf-8";
+
+.box {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #000;
+}
+.gray {
+    background-color: gray;
+}
+
+h1 {
+    display: inline-block;
+    background-color: #ddd;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+div[name=kh] {
+    background-color: #aaa;
+    color: #fff;
+}
+
+/* 포함된 */
+div[name~=kh] {
+    background-color: #6b4040;
+    color: #fff;
+}
+
+/* 시작하는 */
+div[name^=k] {
+    background-color: #3d6774;
+    color: #fff;
+}
+
+/* 끝나는 */
+div[name$=h] {
+    background-color: #4c3d74;
+    color: #fff;
+}
+
+/* 포함하는 */
+div[name*=h] {
+    background-color: #a53b4d;
+    color: #fff;
+}
+
+/********************************************************/
+/* 자식, 후손 */
+#test1 {
+    background-color: #ddd;
+    padding: 20px;
+    border-radius: 10px;
+}
+#test1 > h4 {
+    background-color: #cc3636;
+    color: #fff;
+}
+#test1 > ul > h4 {
+    background-color: #485fe2;
+    color: #fff;
+}
+#test1 li {
+    background-color: #44803e;
+    color: #fff;
+}
+/* -----------------------------------------------------*/
+/* 동위 선택자 */
+#test3 {
+    background-color: #eee;
+    padding: 20px;
+    border-radius: 5px;
+}
+#test3 + div {
+    background-color: #aaa;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+/* #test3 ~ div {
+    background-color: #207a4d;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 10px;
+} */
+/* ----------------------------------------------------- */
+#test-active:active {
+    background-color: aqua;
+}
+#test-hover:hover {
+    background-color: plum;
+}
+
+/* 상태선택자 */
+input[type=checkbox]:checked {
+    width: 100px;
+    height: 100px;
+}
+
+#test6 > pre:last-child {
+    background-color: #44803e;
+}
+
+
+/* ----------------------------------------------------- */
+/* 문자 선택자 */
+#test8 {
+    background-color: #485fe2;
+}
+#test8 > p::first-letter {
+    background-color: rgb(168, 68, 68);
+    color: #fff;
+    font-weight: 500;
+    font-size: 20px;
+}
+#test8 > p::first-line {
+    background-color: rgb(168, 133, 68);
+}
+#test8 > p::selection {
+    background-color: #ddd;
+}
+
+/* 부정선택자 */
+#test9 p:not(:nth-child(2)) {
+    background-color: #f00;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

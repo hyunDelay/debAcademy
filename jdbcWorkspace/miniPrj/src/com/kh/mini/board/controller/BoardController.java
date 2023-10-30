@@ -1,6 +1,7 @@
 package com.kh.mini.board.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.kh.mini.board.service.BoardService;
@@ -24,12 +25,16 @@ public class BoardController {
 		System.out.println("1. 게시글 작성");
 		System.out.println("2. 게시글 목록 (최신순)");
 		System.out.println("3. 게시글 상세조회 (번호)");
+		System.out.println("4. 게시글 삭제 (번호)");
+		System.out.println("5. 게시글 검색 (제목)");
 		
 		String num = Main.SC.nextLine();
 		switch(num) {
 		case "1" : write(); break;
 		case "2" : boardList(); break;
 		case "3" : boardDetailByNo(); break;
+		case "4" : delete(); break;
+		case "5" : searchBoardByTitle(); break;
 		default : System.out.println("잘못 입력하셨습니다.");
 		}
 	}
@@ -80,7 +85,45 @@ public class BoardController {
 		
 	}
 	
-	// 삭제 (작성자 본인만)
+	/**
+	 * 삭제 (작성자 본인만)
+	 * 
+	 * UPDATE BOARD SET DEL_YN = 'Y', MODIFY_DATE = SYSDATE WHERE NO = ? AND WRITER_NO = ?
+	 * */
+	public void delete() {
+		
+		try {
+
+			System.out.println("----- 게시글 삭제 ------");
+			
+			// 로그인 여부 체크
+			if(Main.loginMember == null) {
+				throw new Exception("로그인이 필요합니다.");
+			}
+			
+			// 데이터 (NO, WRITER_NO)
+			System.out.print("게시글 번호 : ");
+			String num = Main.SC.nextLine();
+			String memberNo = Main.loginMember.getNo();
+			
+			// 서비스
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("boardNum", num);
+			map.put("loginMemberNo", memberNo);
+			int result = service.delete(map);
+			
+			// 결과
+			if(result != 1) {
+				throw new Exception();
+			}
+			System.out.println("게시글이 삭제되었습니다.");
+			
+		} catch(Exception e) {
+			System.out.println("게시글 삭제 실패");
+			e.printStackTrace();
+		}
+		
+	}
 	
 	// 수정 (제목, 내용)
 	
@@ -164,6 +207,48 @@ public class BoardController {
 			
 		} catch(Exception e) {
 			System.err.println("게시글 상세 조회 실패");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * 게시글 검색 - 제목
+	 * 
+	 * B.SELECT 
+	 * 		B.NO
+	 * 		, B.TITLE
+	 * 		, M.NICK AS WRITER_NICK
+	 * 		, B.HIT
+	 * 		, TO_CHAR(B.ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE
+	 * FROM BOARD B
+	 * JOIN MEMBER M ON B.WRITER_NO = M.NO
+	 * WHERE B.TITLE LIKE '%?%'
+	 * ORDER BY B.NO DESC
+	 * */
+	
+	public void searchBoardByTitle() {
+		try {
+			System.out.println("----- 게시글 검색 -----");
+			
+			// 데이터
+			System.out.print("검색어 : ");
+			String searchValue = Main.SC.nextLine();
+			
+			// 서비스
+			List<BoardVo> voList = service.searchBoardByTitle(searchValue);
+			
+			// 결과
+			if(voList.size() == 0) {
+				System.out.println("검색결과가 없습니다.");
+			}
+			
+			for(BoardVo vo : voList) {
+				System.out.println(vo);
+			}
+			
+		} catch(Exception e) {
+			System.out.println("게시글 검색 실패");
 			e.printStackTrace();
 		}
 		

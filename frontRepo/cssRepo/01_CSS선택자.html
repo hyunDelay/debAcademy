@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS선택자</title>
+    <style>
+        /* * {
+            background-color: red;
+        } */
+        li {
+            background-color: #f5f5f5;
+            padding: 5px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        li + li {margin-top: 10px;}
+        .kh {background-color: #aaa; color: #fff;}
+        .red {background-color: #333; color: #fff;}
+        #target {background-color: green; color: #fff;}
+    </style>
+</head>
+<body>
+    <h1>CSS 선택자</h1>
+    <pre>
+        선택자란?
+        특정 HTML 요소를 선택할 때 사용
+    </pre>
+    <hr>
+
+    <h2>1. 모든 요소를 선택하는 선택자</h2>
+    <pre>
+        * : HTML 문서 내 모든 태그를 선택할 때 사용
+
+        * {
+            스타일 속성 : 값;
+            스타일 속성 : 값;
+            스타일 속성 : 값;
+        }
+    </pre>
+
+    <h2>2. 태그 선택자</h2>
+    <pre>
+        HTML 문서 내 같은 태그를 모두 선택
+        태그명 {
+            스타일 속성 : 값;
+        }
+    </pre>
+
+    <h2>3. 클래스 선택자</h2>
+    <pre>
+        HTML 문서 내 여러개의 태그를 동일한 클래스명으로 지정하여 선택
+        .클래스명 {
+            스타일 속성 : 값;
+        }
+    </pre>
+
+    <h2>4. 아이디 선택자</h2>
+    <pre>
+        HTML 문서 내 해당 아이디를 가진 태그를 선택
+        #아이디 {
+            스타일 속성 : 값;
+        } 
+    </pre>
+
+    <ul>
+        <li class="kh">안녕하세요</li>
+        <li class="kh">안녕하세요</li>
+        <li id="target">안녕하세요</li>
+        <li class="">안녕하세요</li>
+        <li class="kh red">안녕하세요</li>
+    </ul>
+
+</body>
+</html>

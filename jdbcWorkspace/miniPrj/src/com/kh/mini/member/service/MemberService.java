@@ -1,6 +1,8 @@
 package com.kh.mini.member.service;
 
 import java.sql.Connection;
+import java.util.List;
+import java.util.Map;
 
 import com.kh.jdbc.JDBCTemplate;
 import com.kh.mini.member.dao.MemberDao;
@@ -83,6 +85,66 @@ public class MemberService {
 		
 		return result;
 		
+	}
+
+	public List<MemberVo> memberList() throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		List<MemberVo> voList = dao.memberList(conn);
+		
+		// tx
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return voList;
+		
+	}
+
+	// 닉네임 변경
+	public int changeNick(MemberVo vo) throws Exception {
+
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// DAO
+		int result = dao.changeNick(conn, vo);
+		
+		// tx
+		if(result == 1) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public int changePwd(Map<String, String> m) throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		int result = dao.changePwd(conn, m);
+		
+		// tx
+		if(result == 1) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return result;
 	}
 
 }

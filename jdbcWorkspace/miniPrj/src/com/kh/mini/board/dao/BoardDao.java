@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.kh.jdbc.JDBCTemplate;
@@ -117,6 +118,59 @@ public class BoardDao {
 		
 		return result;
 		
+	}
+
+	public int delete(Connection conn, HashMap<String, String> map) throws Exception {
+		
+		// SQL
+		String sql = "UPDATE BOARD SET DEL_YN = 'Y', MODIFY_DATE = SYSDATE WHERE NO = ? AND WRITER_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, map.get("boardNum"));
+		pstmt.setString(2, map.get("loginMemberNo"));
+		int result = pstmt.executeUpdate();
+		
+		// rs
+		
+		// close
+		JDBCTemplate.close(pstmt);
+		
+		return result;
+		
+	}
+
+	// 게시글 검색 (제목)
+	public List<BoardVo> searchBoardByTitle(Connection conn, String searchValue) throws Exception {
+		
+		// sql
+		String sql = "SELECT B.NO , B.TITLE , M.NICK AS WRITER_NICK , B.HIT , TO_CHAR(B.ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE FROM BOARD B JOIN MEMBER M ON B.WRITER_NO = M.NO WHERE B.TITLE LIKE '%' || ? || '%' ORDER BY B.NO DESC";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, searchValue);
+		ResultSet rs = pstmt.executeQuery();
+		
+		// rs
+		List<BoardVo> voList = new ArrayList<BoardVo>();
+		while(rs.next()) {
+			String no = rs.getString("NO");
+			String title = rs.getString("TITLE");
+			String writerNick = rs.getString("WRITER_NICK");
+			String hit = rs.getString("HIT");
+			String enrollDate = rs.getString("ENROLL_DATE");
+			
+			BoardVo vo = new BoardVo();
+			vo.setNo(no);
+			vo.setTitle(title);
+			vo.setWriterNick(writerNick);
+			vo.setHit(hit);
+			vo.setEnrollDate(enrollDate);
+			
+			voList.add(vo);
+		}
+		
+		// close
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+		
+		return voList;
 	}
 
 }

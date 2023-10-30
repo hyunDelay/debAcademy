@@ -1,5 +1,9 @@
 package com.kh.mini.member.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.kh.mini.main.Main;
 import com.kh.mini.member.service.MemberService;
 import com.kh.mini.member.vo.MemberVo;
@@ -20,6 +24,8 @@ public class MemberController {
 		System.out.println("2. 로그인");
 		System.out.println("3. 로그아웃");
 		System.out.println("4. 회원탈퇴");
+		System.out.println("5. 전체회원조회");
+		System.out.println("6. 마이페이지");
 		
 		String num = Main.SC.nextLine();
 		switch(num) {
@@ -27,6 +33,8 @@ public class MemberController {
 		case "2" : login(); break;
 		case "3" : logout(); break;
 		case "4" : quit(); break;
+		case "5" : memberList(); break;
+		case "6" : mypage(); break;
 		default : System.out.println("잘못 입력하셨습니다.");
 		}
 	}
@@ -110,7 +118,7 @@ public class MemberController {
 			}
 			Main.loginMember = x;
 			System.out.println("로그인 성공!");
-			
+			System.out.println("닉네임 : " + x.getNick());
 			
 		} catch(Exception e) {
 			System.err.println("로그인 실패...");
@@ -164,11 +172,162 @@ public class MemberController {
 		}
 	}
 	
-	// 마이페이지 (현재 로그인한 본인 정보 조회)
-	// 비밀번호 수정
-	// 닉네임 수정
+	/**
+	 * 마이페이지 (현재 로그인한 본인 정보 조회)
+	 * */
+	public void mypage() {
+		
+		try {
+			System.out.println("----- 마이페이지 -----");
+			
+			// 로그인 검사
+			if(Main.loginMember == null) {
+				throw new Exception("로그인이 필요합니다.");
+			}
+			
+			System.out.println("아이디 : " + Main.loginMember.getId());
+			System.out.println("패스워드 : " + Main.loginMember.getPwd());
+			System.out.println("닉네임 : " + Main.loginMember.getNick());
+			System.out.println("가입일시 : " + Main.loginMember.getEnrollDate());
+			System.out.println("-----------------------------");
+			
+			// 정보 변경
+			System.out.println("1. 닉네임 변경");
+			System.out.println("2. 비밀번호 변경");
+			System.out.println("9. 이전으로 돌아가기");
+			
+			String num = Main.SC.nextLine();
+			
+			switch(num) {
+			case "1" : changeNick(); break;
+			case "2" : changePwd(); break;
+			case "9" : return;
+			default : System.out.println("잘못 입력하셨습니다.");
+			}
+			
+			
+			
+		} catch(Exception e) {
+			System.out.println("마이페이지 조회 실패");
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+	
+	/**
+	 * 비밀번호 수정
+	 * 
+	 * UPDATE MEMBER SET PWD = ? WHERE NO = ? AND PWD = ?
+	 * */
+	public void changePwd() {
+		
+		try {
+			System.out.println("----- 비밀번호 변경 -----");
+			
+			// 데이터
+			System.out.print("기존 비밀번호 : ");
+			String oldPwd = Main.SC.nextLine();
+			System.out.print("신규 비밀번호 : ");
+			String newPwd = Main.SC.nextLine();
+			String loginMemberNo = Main.loginMember.getNo();
+			
+			Map<String, String> m = new HashMap<String, String>();
+			m.put("newPwd", newPwd);
+			m.put("loginMemberNo", loginMemberNo);
+			m.put("oldPwd", oldPwd);
+			
+			// 서비스
+			int result = service.changePwd(m);
+			
+			// 결과
+			if(result != 1) {
+				throw new Exception();
+			}
+			System.out.println("비밀번호 변경 성공");
+			logout();
+			
+		} catch(Exception e) {
+			System.out.println("비밀번호 변경 실패");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * 닉네임 수정
+	 * 
+	 * UPDATE MEMBER SET NICK = ? WHERE NO = ?
+	 * */
+	public void changeNick() {
+		try {
+			System.out.println("--- 닉네임 변경 ---");
+			
+			// 데이터
+			System.out.print("변경할 닉네임 : ");
+			String newNick = Main.SC.nextLine();
+			
+			MemberVo vo = new MemberVo();
+			vo.setNick(newNick);
+			vo.setNo(Main.loginMember.getNo());
+			
+			// 서비스
+			int result = service.changeNick(vo);
+			
+			// 결과
+			if(result != 1) {
+				throw new Exception();
+			}
+			System.out.println("닉네임 변경 성공");
+			logout(); // Main.loginMember 값을 다시 할당하기 위해서
+			
+		} catch(Exception e) {
+			System.out.println("닉네임 변경 실패");
+			e.printStackTrace();
+		}
+	}
 
-	// 전체 회원 조회 (관리자만 가능)
+	/**
+	 * 전체 회원 조회 (관리자만 가능)
+	 * 
+	 * SELECT ID, NICK, ENROLL_DATE, MODIFY_DATE, DEL_YN FROM MEMBER
+	 * 
+	 * 
+	 * */
+	public void memberList() {
+		
+		try {
+			
+			System.out.println("----- 전체 회원 조회 ------");
+			
+			// 관리자 체크
+			if(!Main.loginMember.getNo().equals("1")) {
+				throw new Exception("관리자만 접근 가능합니다.");
+			}
+			
+			// 데이터
+			
+			// 서비스
+			List<MemberVo> voList = service.memberList();
+			
+			// 결과
+			for(MemberVo vo : voList) {
+				System.out.print(vo.getId() + " ┃ ");
+				System.out.print(vo.getNick() + " ┃ ");
+				System.out.print(vo.getEnrollDate() + " ┃ ");
+				System.out.print(vo.getModifyDate() + " ┃ ");
+				System.out.print(vo.getDelYn());
+				System.out.println();
+			}
+			
+		} catch(Exception e) {
+			System.out.println("전체 회원 목록 조회 실패");
+			e.printStackTrace();
+		}
+		
+	}
+	
 	// 회원 조회 - 번호 (관리자만 가능)
 	// 회원 조회 - 아이디 (관리자만 가능)
 	// 회원 조회 - 닉네임 (관리자만 가능)

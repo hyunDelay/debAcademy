@@ -1,6 +1,7 @@
 package com.kh.mini.board.service;
 
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
 
 import com.kh.jdbc.JDBCTemplate;
@@ -77,6 +78,43 @@ public class BoardService {
 		JDBCTemplate.close(conn);
 		
 		return vo;
+	}
+
+	// 게시글 삭제
+	public int delete(HashMap<String, String> map) throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// DAO
+		int result = dao.delete(conn, map);
+		
+		// tx
+		if(result == 1) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	// 게시글 검색 (제목)
+	public List<BoardVo> searchBoardByTitle(String searchValue) throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		List<BoardVo> voList = dao.searchBoardByTitle(conn, searchValue);
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return voList;
 	}
 
 }
