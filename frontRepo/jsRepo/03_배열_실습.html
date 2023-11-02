@@ -123,7 +123,7 @@
         function input(){
             const str = strInp.value;
             inputStrings.push(str); // 입력된 문자열을 배열에 추가
-            strInp.value = ''; // 입력 필드 초기화
+            strInp.value = ''; // 입력 초기화
         }
         function print(){
             const sortStrings = inputStrings.sort((a, b) => b.localeCompare(a)); // 배열을 내림차순으로 정렬
@@ -163,27 +163,27 @@
             const addInput = document.querySelector('#add');
             const print4 = document.querySelector('#print4');
 
-            // 현재 문자열을 가져와서 공백을 기준으로 배열로 분할
+            // 현재 문자열을 가져와서 공백으로 배열로 만듬
             const currentFoods = stringla4.innerHTML.split(' ');
             
-            // 삭제할 음식과 추가할 음식 입력 받기
+            // 삭제문자열와 추가문자열 입력 받기
             const removeFood = removeInput.value;
             const addFood = addInput.value;
 
-            // 삭제할 음식이 배열에 있는 경우, 해당 음식을 제거
+            // 삭제문자열이 배열에 있으면 제거
             const indexToRemove = currentFoods.indexOf(removeFood);
             if (indexToRemove !== -1) {
                 currentFoods.splice(indexToRemove, 1);
             }
 
-            // 추가할 음식을 배열에 추가
+            // 추가 문자열을 배열에 추가
             currentFoods.push(addFood);
 
             // 결과 문자열 생성 및 출력
             const resultString = currentFoods.join(" ㅣ ");
             stringla4.innerHTML = resultString;
 
-            // 입력 필드 초기화
+            // 입력 초기화
             removeInput.value = '';
             addInput.value = '';
 
