@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>연습장</title>
+
+    <style>
+        .box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100px;
+            height: 100px;
+            border: 1px solid #000;
+            border-radius: 4px;
+        }
+        .gray {
+            background-color: #aaa;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>연습장</h1>
+
+    <div id="target" class="box gray">박스</div>
+
+    <script>
+        const target = document.querySelector('#target');
+        target.addEventListener('mouseout', ()=>{
+            console.log("이벤트발생");
+            alert('알람');
+        });
+    </script>
+
+    <hr>
+
+    <input type="text" id="userId">
+    <div id="result"></div>
+    <script>
+        const userId = document.querySelector("#userId");
+        const result = document.querySelector('#result');
+
+        userId.addEventListener("blur", () => {
+            result.innerHTML = '아이디 4글자이상으로';
+        });
+
+
+    </script>
+
+</body>
+</html>

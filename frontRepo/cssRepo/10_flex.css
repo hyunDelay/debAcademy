@@ -1,0 +1,33 @@
+@charset "utf-8";
+
+.wrap {
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: center;
+    flex-direction: row;
+    align-content: center; */
+    gap: 10px;
+    width: 500px;
+    height: 500px;
+    border: 5px dashed rgb(150, 31, 31);
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    background-color: rgb(29, 29, 87);
+    border-radius: 5px;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.box:nth-child(2) {
+    align-self: center;
+    background-color: blue;
+}

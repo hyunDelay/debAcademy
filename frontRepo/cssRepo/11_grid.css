@@ -1,0 +1,52 @@
+@charset "utf-8";
+
+.wrap {
+    display: grid;
+
+    /* 직접 지정하는 공간 */
+    /* grid-template-rows: repeat(3, 1fr); */
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+
+    /* 자동으로 만들어지는 공간 */
+    grid-auto-rows: 300px;
+
+    /* 아이템 정렬 */
+    /* justify-items: center;
+    align-items: center; */
+    place-items: center center;
+
+    /* 컨텐트 정렬 */
+    justify-content: center;
+    align-content: center;
+
+    /* 중심축 설정 */
+    grid-auto-flow: row;
+
+    /*  셀 사이 공간띄우기 */
+    gap: 30px 30px;
+
+    width: 100%;
+    height: 600px;
+    border: 5px dotted #aaa;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.box {
+    width: 100px;
+    height: 100px;
+    border: 1px solid rgb(121, 29, 29);
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+.box:nth-child(2) {
+    /* 셀 합치기 */
+    grid-column: 1 / span 2;
+
+    place-self: normal normal;
+    order: -1;
+
+    background-color: rgb(32, 104, 104);
+}

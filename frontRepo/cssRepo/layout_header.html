@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>layout header</title>
+</head>
+
+<style>
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 100px;
+        border: 1px solid red;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    header div {
+        width: calc(25% - 5px);
+        border: 1px solid blue;
+        height: 100%;
+    }
+    .search_box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+    }
+</style>
+<body>
+
+<header>
+    <div></div>
+    <div class="search_box">
+        <input type="text">
+        <button>검색</button>
+    </div>
+    <div></div>
+</header>
+
+</body>
+</html>

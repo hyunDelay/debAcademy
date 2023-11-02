@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개요 연습</title>
+
+    <style>
+        div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ddd;
+            width: 100px;
+            height: 100px;
+            border-radius: 4px;
+        }
+        div + div {
+            margin-top: 10px;
+        }
+        div#box{
+
+        }
+        #rbox {
+            background-color: #642626;
+            color: #fff;
+        }
+        #blueBox {
+            background-color: #263a70;
+            color: #fff;
+        }
+        .abc {
+            border: 5px solid #000;
+        }
+    </style>
+</head>
+<body>
+
+    <div>1번</div>
+    <div>2번</div>
+
+    <hr>
+
+    <div id="box" class="abc">박스</div>
+
+    <div id="rbox" class="abc">레드박스</div>
+
+    <div id="blueBox" class="abc">블루박스</div>
+
+    <script>
+
+        const rbox = document.querySelector('#rbox');
+        console.log(rbox);
+
+        const abc = document.querySelectorAll('.abc');
+        
+        console.log(abc);
+        for(let i = 0; i < abc.length; i++){
+            console.log(abc[i]);
+        }
+
+    </script>
+</body>
+</html>
