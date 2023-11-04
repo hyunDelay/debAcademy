@@ -1,0 +1,462 @@
+@charset "utf-8";
+
+@import './reset.css';
+
+/* ============================================================
+    파일정의 : style.css
+============================================================ */
+
+.inner {
+    width: 1280px;
+    margin: 0 auto;
+}
+
+.headerTop {
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+}
+.headerTop .inner {
+    display: flex;
+    justify-content: space-between;
+    height: 45px;
+}
+.headerTop .left,
+.headerTop .right {
+    display: flex;
+    gap: 15px;
+}
+.headerTop .left li a,
+.headerTop .right li a {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    font-size: 14px;
+}
+.headerTop li.cart a::after {
+    content: "0";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #ddd;
+    margin-left: 5px;
+    font-size: 13px;
+}
+
+.headerMiddle {
+    padding-top: 50px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+}
+.headerMiddle h1 {
+    display: flex;
+    justify-content: center;
+}
+.headerMiddle h1 a {
+    font-size: 32px;
+    font-weight: 700;
+}
+.headerMiddle h1 a::after {
+    content: "SHOPPINGMALL";
+    display: block;
+    margin-top: -5px;
+    text-align: center;
+    font-weight: 400;
+    font-size: 12px;
+}
+.headerMiddle .etcBox {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+.headerMiddle .etcBox .snsBox {
+    display: flex;
+    gap: 5px;
+}
+.headerMiddle .etcBox .snsBox a {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-indent: -9999px;
+}
+.headerMiddle .etcBox .snsBox a::before {
+    content: "";
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+.headerMiddle .etcBox .snsBox a.facebook::before {
+    background: url(https://www.kh-academy.co.kr/resources/images/main/main_renewal/top_sub_right_02_new.png);
+}
+.headerMiddle .etcBox .snsBox a.instargram::before {
+    background: url(https://www.kh-academy.co.kr/resources/images/main/main_renewal/top_sub_right_03_new.png);
+}
+.headerMiddle .etcBox .searchBox {
+    display: flex;
+}
+.headerMiddle .etcBox .searchBox input {
+    display: block;
+    border: 1px solid #ddd;
+    padding: 5px 15px;
+    box-sizing: border-box;
+    border-radius: 3px 0 0 3px;
+    width: 150px;
+}
+.headerMiddle .etcBox .searchBox button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+    background-color: #ddd;
+    border-radius: 0 3px 3px 0;
+    font-weight: 500;
+    color: #777;
+    cursor: pointer;
+}
+
+nav {
+    position: sticky;
+    top: 0;
+    left: 0;
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+    height: 45px;
+    background-color: #fff;
+    z-index: 10;
+}
+nav .inner {
+    display: flex;
+}
+nav .allMenuBox > ul {
+    display: none;
+}
+nav .allMenuBox > a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+}
+nav .allMenuBox > a:hover {
+    background-color: #333;
+}
+nav .allMenuBox > a span {
+    width: 20px;
+    height: 2px;
+    border-radius: 2px;
+    background-color: #333;
+    transition: .2s;
+}
+nav .allMenuBox > a span + span {
+    margin-top: 4px;
+}
+nav .allMenuBox > a:hover span:nth-child(1) {
+    transform: translateY(7px);
+    height: 10px;
+    background-color: #fff;
+    border-radius: 1px;
+}
+nav .allMenuBox > a:hover span:nth-child(2) {
+    display: none;
+}
+nav .allMenuBox > a:hover span:nth-child(3) {
+    transform: translateY(-12px);
+    background-color: #fff;
+}
+nav .inner > ul {
+    display: flex;
+    gap: 30px;
+    justify-content: space-evenly;
+    width: calc(100% - 45px);
+}
+
+/* 1depth */
+nav .inner > ul > li {
+    position: relative;
+}
+nav .inner > ul > li > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    font-size: 14px;
+    transition: .2s;
+}
+nav .inner > ul > li:hover > a {
+    border-bottom: 1px solid #333;
+    color: #999;
+}
+/* 2depth */
+nav .inner > ul > li > ul {
+    display: none;
+    position: absolute;
+    top: 44px;
+    left: 50%;
+    width: 160px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #fff;
+    transform: translateX(-50%);
+}
+nav .inner > ul > li:hover > ul {
+    display: block;
+}
+nav .inner > ul > li > ul > li > a {
+    display: block;
+    width: 100%;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    border-radius: 3px;
+    font-size: 14px;
+}
+nav .inner > ul > li > ul > li:hover > a {
+    background-color: #f5f5f5;
+}
+nav .inner > ul > li.onSale >  a {
+    color: rgb(202, 41, 70);
+}
+nav .inner > ul > li.best >  a {
+    color: rgb(71, 132, 200);
+}
+
+
+/* container */
+.locationBox {
+    display: flex;
+    justify-content: flex-end;
+    gap: 30px;
+    padding: 10px 0;
+}
+.locationBox li {
+    position: relative;
+}
+.locationBox li::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: -18px;
+    margin-top: -1px;
+    width: 5px;
+    height: 5px;
+    border: 1px solid #666;
+    border-width: 0 1px 1px 0;
+    transform: rotate(-45deg);
+}
+.locationBox li:last-child::after {
+    display: none;
+}
+.locationBox li a {
+    font-size: 13px;
+    color: #666;
+}
+
+.detailItemBox {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.detailInfo {
+    width: calc(100% - 576px - 90px);
+}
+.detailInfo .tit {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    font-size: 20px;
+}
+.detailInfo .info dl {
+    display: flex;
+}
+.detailInfo .info dl dt {
+    padding: 10px 20px;
+    box-sizing: border-box;
+    width: 135px;
+    font-size: 13px;
+}
+.detailInfo .info dl dd {
+    display: flex;
+    align-items: center;
+    width: calc(100% - 135px);
+    font-size: 14px;
+}
+.detailInfo .info dl:nth-child(2) dd {
+    font-size: 15px;
+    font-weight: 800;
+} 
+.detailInfo .selectItem {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+    margin-top: 20px;
+}
+.detailInfo .selectItem dl {
+    display: flex;
+}
+.detailInfo .selectItem dl dt {
+    padding: 15px 20px;
+    box-sizing: border-box;
+    width: 135px;
+    font-size: 13px;
+}
+.detailInfo .selectItem dl dt::before {
+    content: ">";
+    margin-right: 10px;
+}
+.detailInfo .selectItem dl dd {
+    display: flex;
+    align-items: center;
+    width: calc(100% - 135px);
+}
+.detailInfo .selectItem select {
+    border: 1px solid #ddd;
+    padding: 3px 10px;
+    width: 100%;
+    height: 37px;
+    border-radius: 3px;
+    color: #999;
+}
+.detailInfo .selectItem select:focus {
+    border: 1px solid #333;
+    outline: none;
+    color: #333;
+}
+
+.selectResult {
+    padding: 20px 0;
+}
+.selectResult li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0 15px;
+}
+.selectResult li:first-child {
+    padding-top: 0;
+}
+.selectResult li .option {
+    padding: 4px 8px;
+    border-radius: 3px;
+    background-color: #555;
+    font-size: 13px;
+    color: #fff;
+}
+.selectResult li .right {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+.selectResult li input[type="number"] {
+    border: 1px solid #ddd;
+    padding: 3px 5px 3px 8px;
+    box-sizing: border-box;
+    border-radius: 3px;
+    font-size: 13px;
+    width: 46px;
+}
+.selectResult li input[type="number"]:focus {
+    border: 1px solid #333;
+    outline: none;
+}
+.selectResult li .price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.selectResult li .price span {
+    font-size: 15px;
+    font-weight: 700;
+}
+.selectResult li .price em {
+    font-style: normal;
+    font-size: 13px;
+}
+.selectResult li .right button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ddd;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    color: #888;
+    cursor: pointer;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.detailInfo .total {
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 700;
+}
+.detailInfo .total::before {
+    content: "total : ";
+    margin-right: 10px;
+    font-size: 13px;
+}
+.detailInfo .btnArea {
+    display: flex;
+    gap: 10px;
+}
+.detailInfo .btnArea button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    cursor: pointer;
+}
+.detailInfo .btnArea button.btnGo {
+    width: calc(100% - 110px - 20px);
+    background-color: #333;
+    color: #fff;
+}
+
+.detailContent {
+    display: flex;
+    justify-content: center;
+    padding: 50px 0;
+    border-top: 1px solid #ddd;
+    margin-top: 90px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
