@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #c3ddff;
+            height: 100vh;
+            box-sizing: border-box;
+            margin: 0;
+        }
+        .wrap {
+            width: 400px;
+            background-color: #f5f5f5;
+            padding: 50px 20px 20px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        dl {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        dl dt {
+            width: 120px;
+            font-weight: 600;
+        }
+        dl dd {
+            width: calc(100% - 120px);
+            margin: 0;
+        }
+        dl dd input {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px dashed #000;
+            border-width: 0 0 1px 0;
+            background-color: transparent;
+        }
+        dl dd input + input {
+            margin-top: 15px;
+        }
+        dl:last-of-type {
+            margin-bottom: 50px;
+        }
+        .etc {
+            font-size: 11px;
+            color: #999;
+        }
+        .email {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .wrap > button {
+            display: block;
+            width: 100%;
+            padding: 15px 0;
+            background-color: #adda9a;
+            border: none;
+            font-weight: 600;
+            font-size: 1.01rem;
+            color: #245a24;
+            cursor: pointer;
+        }
+        .req {
+            display: block;
+            padding: 5px 0 0 5px;
+            font-size: 11px;
+            color: rgb(197, 27, 27);
+            flex-flow:
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <dl>
+        <dt><label for="userId">아이디</label></dt>
+        <dd>
+            <input type="text" id="userId">
+            <span class="req"></span>
+        </dd>
+    </dl>
+    <dl>
+        <dt><label for="userpwd">패스워드</label></dt>
+        <dd>
+            <input type="password" id="userPwd">
+            <span class="req"></span>
+            <span class="etc"></span>
+        </dd>
+    </dl>
+    <dl>
+        <dt><label for="userPwd2">패스워드 확인</label></dt>
+        <dd>
+            <input type="password" id="userPwd2">
+            <span class="req"></span>
+        </dd>
+    </dl>
+    <dl>
+        <dt><label for="userEmail">이메일</label></dt>
+        <dd>
+            <div class="email">
+                <input type="text" id="userEmail">
+                <span>@</span>
+                <input type="text" id="userEmail2">
+            </div>
+
+        </dd>
+    </dl>
+    <dl>
+        <dt><label for="">주소</label></dt>
+        <dd><input type="text" id="userAddr"><input type="text" id="userAddr2"></dd>
+    </dl>
+
+
+    <button>가 입</button>
+</div>
+
+<script>
+    const userId = document.querySelector('#userId');
+    const userPwd = document.querySelector('#userPwd');
+    const userPwd2 = document.querySelector('#userPwd2');
+
+    // 공통
+    function errorMsg(el){
+        const str = el.value;
+        const req = el.parentNode.querySelector('.req');
+
+        if (str.length < 1) {
+            req.innerHTML = '! 필수 입력 항목 입니다.';
+        } else {
+            req.innerHTML = '';
+        }
+    }
+    function pwdMsg(el){
+        const etc = el.parentNode.querySelector('.etc');
+        etc.innerHTML = '영문자 대/소문자 특수문자, 숫자 포함 8 ~ 32자';
+    }
+
+    // 패스워드 규칙
+    userPwd.addEventListener('click', (e) => {
+        pwdMsg(e.target);
+    });
+    userPwd.addEventListener('focus', (e) => {
+        pwdMsg(e.target);
+    });
+    
+    // 유저 아이디
+    userId.addEventListener('blur', (e) => {
+        errorMsg(e.target);
+    });
+    // 유저 패스워드
+    userPwd.addEventListener('blur', (e) => {
+        errorMsg(e.target);
+    });
+    // 유저 패스워드 확인
+    userPwd2.addEventListener('blur', (e) => {
+        errorMsg(e.target);
+    });
+</script>
+</body>
+</html>

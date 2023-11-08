@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트에서 서버에 요청보내는 메소드</title>
+</head>
+<body>
+    <form action="요청을 보낼 주소" method="보내는방식">
+
+        <input type="text">
+        <input type="submit">
+
+    </form>
+
+    <form oninput="x.value=parseInt(a.value) * parseInt(b.value)">
+        <input type="number" id="a" value="0">
+      * <input type="number" id="b" value="0">
+      = <output name="x" for="a b"></output>
+     </form>
+
+     <div>
+        <h1> Employees list </h1>
+        <ul class="content-editable" contenteditable="true">
+          <li> 1. Jhon </li>
+          <li> 2. Mehdi </li>
+          <li> 3. Brad </li>
+        </ul>
+      </div>
+
+    <script>
+        fetch(주소, {
+            method: 'get',
+            data: ~~~,
+            success: ~~~,
+            fail: ~~~,
+        });
+    </script>
+</body>
+</html>

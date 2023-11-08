@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOM (Browser Object Model)</title>
+
+    <script src="./07_BOM.js" defer></script>
+</head>
+<body>
+    <h1>BOM (Browser Object Model)</h1>
+
+    <button onclick="f01()">테스트1</button>
+    <button onclick="f02()">테스트2</button>
+    <button onclick="f03()">테스트3</button>
+    <button onclick="f04()">테스트4</button>
+
+    <pre>
+        * window
+        open()
+        setTimeout() :: n초뒤 실행
+        setInterval() :: n초간격 시간반복
+
+        * location
+        reload() :: 새로고침
+        href :: 주소값 바꿔주는것
+        assign(obj1, obj2) :: obj1에 obj2의 값을 덮어씌우며 수정된 obj1이 리턴된다.
+        replace("찾을 문자열", "변경할 문자열") :: 특정 문자를 다른 문자로 치환 
+        자바스크립트의 replace()함수는 바꿀 문자열을 직접 입력하거나 또는 정규표현식을 사용할 수도 있습니다.
+        
+        모두바꾸기
+        str_text.replace(/찾을 문자열/gi, "변경할 문자열")
+        g : 전체 모든 문자열을 변경 global
+        i : 영문 대소문자를 무시, 모두 일치하는 패턴 검색 ignore
+
+        * history
+        back() :: 뒤로가기
+        forward() :: 브라우저가 세션 기록의 바로 앞 페이지로 이동하도록 지시합니다. history.go(1)과 같습니다
+        go(숫자) :: 앞으로가기
+
+        * navigator :: 현재 브라우저 객체
+        * screen :: 브라우저 화면
+    </pre>
+</body>
+</html>
