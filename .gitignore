@@ -7,3 +7,5 @@ javaWorkspace/groupChat/.settings/
 *.zip
 jdbcWorkspace/.metadata/
 *.class
+setup/
+wasRepo/Servers/
