@@ -9,3 +9,4 @@ jdbcWorkspace/.metadata/
 *.class
 setup/
 wasRepo/Servers/
+*.gitignore
