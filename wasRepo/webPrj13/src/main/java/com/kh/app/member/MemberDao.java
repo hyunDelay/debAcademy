@@ -53,6 +53,7 @@ public class MemberDao {
 		
 		// close
 		JDBCTemplate.close(pstmt);
+		JDBCTemplate.close(rs);
 		
 		return loginMember;
 	}
