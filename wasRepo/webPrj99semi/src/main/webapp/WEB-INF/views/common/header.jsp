@@ -7,8 +7,8 @@
 	session.removeAttribute("alertMsg");
 	
 	// 로그인
-	MemberVo loginMember = (MemberVo) session.getAttribute("loginInfo");
-	session.removeAttribute("loginInfo");
+	MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+	//session.removeAttribute("loginInfo");
 	
 %>
 <script>

@@ -22,7 +22,7 @@ public class MemberLoginController extends HttpServlet {
 		try {
 			
 			// data
-			req.setCharacterEncoding("utf-8");
+			//req.setCharacterEncoding("utf-8"); 필터에서 인코딩 됨
 			String memberId = req.getParameter("memberId");
 			String memberPwd = req.getParameter("memberPwd");
 			
@@ -41,7 +41,7 @@ public class MemberLoginController extends HttpServlet {
 			
 			HttpSession session = req.getSession();
 			session.setAttribute("alertMsg", "로그인 완료되었습니다.");
-			session.setAttribute("loginInfo", loginMember);
+			session.setAttribute("loginMember", loginMember);
 			resp.sendRedirect("/app99/home");
 			
 		} catch(Exception e) {

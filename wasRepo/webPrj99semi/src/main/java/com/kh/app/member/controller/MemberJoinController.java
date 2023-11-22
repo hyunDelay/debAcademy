@@ -28,7 +28,7 @@ public class MemberJoinController extends HttpServlet {
 		try {
 			
 			// data
-			req.setCharacterEncoding("utf-8");
+			//req.setCharacterEncoding("utf-8"); 필터에서 인코딩 됨
 			String memberId = req.getParameter("memberId");
 			String memberPwd = req.getParameter("memberPwd");
 			String memberPwd2 = req.getParameter("memberPwd2");
@@ -36,7 +36,7 @@ public class MemberJoinController extends HttpServlet {
 			String memberPhone = req.getParameter("memberPhone");
 			String memberEmail = req.getParameter("memberEmail");
 			String memberAddress = req.getParameter("memberAddress");
-			String[] memberChk = req.getParameterValues("memberchk");
+			String[] hobbys = req.getParameterValues("memberChk");
 			
 			
 			MemberVo vo = new MemberVo();
@@ -47,7 +47,7 @@ public class MemberJoinController extends HttpServlet {
 			vo.setMemberPhone(memberPhone);
 			vo.setMemberEmail(memberEmail);
 			vo.setMemberAddress(memberAddress);
-			vo.setMemberChk(memberChk);
+			vo.sethobbys(hobbys);
 			
 			// service
 			MemberService ms = new MemberService();

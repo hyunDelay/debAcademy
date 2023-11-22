@@ -13,7 +13,7 @@ public class MemberVo {
 	private String memberPhone;
 	private String memberEmail;
 	private String memberAddress;
-	private String[] memberChk;
+	private String[] hobbys;
 	private String hobbyStr;
 	private String enrollDate;
 	private String modifyDate;
@@ -25,7 +25,7 @@ public class MemberVo {
 	}
 
 	public MemberVo(String no, String memberId, String memberPwd, String memberPwd2, String memberNick,
-			String memberPhone, String memberEmail, String memberAddress, String[] memberChk, String hobbyStr,
+			String memberPhone, String memberEmail, String memberAddress, String[] hobbys, String hobbyStr,
 			String enrollDate, String modifyDate, String status) {
 		super();
 		this.no = no;
@@ -36,7 +36,7 @@ public class MemberVo {
 		this.memberPhone = memberPhone;
 		this.memberEmail = memberEmail;
 		this.memberAddress = memberAddress;
-		this.memberChk = memberChk;
+		this.hobbys = hobbys;
 		this.hobbyStr = hobbyStr;
 		this.enrollDate = enrollDate;
 		this.modifyDate = modifyDate;
@@ -107,13 +107,17 @@ public class MemberVo {
 		this.memberAddress = memberAddress;
 	}
 
-	public String[] getMemberChk() {
-		return memberChk;
+	public String[] gethobbys() {
+		return hobbys;
 	}
 
-	public void setMemberChk(String[] memberChk) {
-		this.memberChk = memberChk;
-		this.hobbyStr = String.join(", ", memberChk);
+	public void sethobbys(String[] hobbys) {
+		if(hobbys == null) {
+			this.hobbyStr = "";
+			return;
+		}
+		this.hobbys = hobbys;
+		this.hobbyStr = String.join(", ", hobbys);
 	}
 
 	public String getHobbyStr() {
@@ -152,7 +156,7 @@ public class MemberVo {
 	public String toString() {
 		return "MemberVo [no=" + no + ", memberId=" + memberId + ", memberPwd=" + memberPwd + ", memberPwd2="
 				+ memberPwd2 + ", memberNick=" + memberNick + ", memberPhone=" + memberPhone + ", memberEmail="
-				+ memberEmail + ", memberAddress=" + memberAddress + ", memberChk=" + Arrays.toString(memberChk)
+				+ memberEmail + ", memberAddress=" + memberAddress + ", hobbys=" + Arrays.toString(hobbys)
 				+ ", hobbyStr=" + hobbyStr + ", enrollDate=" + enrollDate + ", modifyDate=" + modifyDate + ", status="
 				+ status + "]";
 	}
