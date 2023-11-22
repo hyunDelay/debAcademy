@@ -61,7 +61,7 @@
 
 			<h1 align="center">회원가입</h1>
 
-            <form action="/app99/member/join" method="post" onsubmit="checkValidate();">
+            <form action="/app99/member/join" method="post" onsubmit="return checkValidate();">
                 <ul class="joinGroup">
                     <li>
                         <label for="memberId">아이디<span class="req">*</span></label>
@@ -81,15 +81,15 @@
                     </li>
                     <li>
                         <label for="memberNick">전화번호</label>
-                        <input type="tel" id="memberPhone" name="memberNick">
+                        <input type="tel" id="memberPhone" name="memberPhone">
                     </li>
                     <li>
                         <label for="memberNick">이메일</label>
-                        <input type="email" id="memberEmail" name="memberNick">
+                        <input type="email" id="memberEmail" name="memberEmail">
                     </li>
                     <li>
                         <label for="memberNick">주소</label>
-                        <input type="text" id="memberAddress" name="memberNick">
+                        <input type="text" id="memberAddress" name="memberAddress">
                     </li>
                     <li>
                         <label for="">취미</label>
@@ -134,15 +134,56 @@
     function checkValidate(){
 
         // 아이디 길이
-        // 패스워드 일치여부
-        // 패스워드 길이
-        // 닉네임에 부적절한 단어
-        // 이메일 형식 (정규식)
-        // 전화번호 형식 (정규식)
-        if(문제있음){
-            alert('~~문제가 있음');
+        const memberId = document.querySelector('main input[name=memberId]').value;
+        const memberIdRegex = /^[a-z0-9]{4,12}$/;
+
+        if(!memberIdRegex.test(memberId)){
+            alert("아이디를 올바르게 입력해주세요.");
+            document.querySelector('main input[name=memberId]').focus();
             return false;
         }
+
+        // 패스워드 일치여부
+        const memberPwd = document.querySelector('main input[name=memberPwd]').value;
+        const memberPwd2 = document.querySelector('main input[name=memberPwd2]').value;
+
+        if(memberPwd !== memberPwd2){
+           alert("비밀번호와 비밀번호 확인이 일치하지 않습니다."); 
+           document.querySelector('main input[name=memberPwd]').focus();
+           return false;
+        }
+
+        // 패스워드 길이
+        if(memberPwd.length < 4){
+           alert("비밀번호는 4글자 이상이어야 합니다."); 
+           document.querySelector('main input[name=memberPwd]').focus();
+           return false;
+        }
+
+        // 닉네임에 부적절한 단어
+        const memberNick = document.querySelector('main input[name=memberNick]').value;
+        if(memberNick.includes('admin')){
+            document.querySelector('main input[name=memberNick]').focus();
+            alert('부적절한 닉네임 입니다.');
+            return false;
+        }
+
+        // 전화번호 형식 (정규식)
+        const phoneRegex = /^01[0-9]-\d{4}-\d{4}$/;
+        const memberPhone = document.querySelector('main input[name=memberPhone]').value;
+        if (memberPhone !== '' && !phoneRegex.test(memberPhone)) {
+            alert('전화번호 형식이 맞지않습니다.');
+            return false;
+        }
+
+        // 이메일 형식 (정규식)
+        const memberEmail = document.querySelector('main input[name=memberEmail]').value;
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        if (memberEmail !== '' && !emailRegex.test(memberEmail)) {
+            alert('이메일 형식이 맞지않습니다.');
+            return false;
+        }
+
         return true;
     }
 </script>
