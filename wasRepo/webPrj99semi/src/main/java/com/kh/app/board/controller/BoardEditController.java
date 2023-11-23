@@ -1,0 +1,26 @@
+package com.kh.app.board.controller;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/board/edit")
+public class BoardEditController extends HttpServlet {
+	
+	// 수정하기
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		// data
+		
+		// service
+		
+		// result
+		
+	}
+	
+}

@@ -16,7 +16,7 @@ public class BoardDao {
 	public List<BoardVo> selectBoardList(Connection conn) throws Exception {
 		
 		// sql
-		String sql = "SELECT B.NO , B.CATEGORY_NO , B.TITLE , B.CONTENT , B.WRITER_NO , B.HIT , B.ENROLL_DATE , B.MODIFY_DATE , B.STATUS , M.NICK FROM BOARD B JOIN MEMBER M ON M.NO = B.WRITER_NO WHERE B.STATUS = 'O' ORDER BY B.NO DESC";
+		String sql = "SELECT B.NO , B.CATEGORY_NO , C.NAME AS CATEGORY_NAME , B.TITLE , B.CONTENT , B.WRITER_NO , B.HIT , B.ENROLL_DATE , B.MODIFY_DATE , B.STATUS , M.NICK FROM BOARD B JOIN MEMBER M ON M.NO = B.WRITER_NO JOIN CATEGORY C ON B.CATEGORY_NO = C.NO WHERE B.STATUS = 'O' ORDER BY B.NO DESC";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		
@@ -33,6 +33,7 @@ public class BoardDao {
 			String enrollDate = rs.getString("ENROLL_DATE");
 			String modifyDate = rs.getString("MODIFY_DATE");
 			String status = rs.getString("STATUS");
+			String categoryName = rs.getString("CATEGORY_NAME");
 			
 			BoardVo vo = new BoardVo();
 			vo.setNo(no);
@@ -45,6 +46,7 @@ public class BoardDao {
 			vo.setEnrollDate(enrollDate);
 			vo.setModifyDate(modifyDate);
 			vo.setStatus(status);
+			vo.setCategoryName(categoryName);
 			
 			boardVoList.add(vo);
 		}
@@ -70,6 +72,81 @@ public class BoardDao {
 		
 		// close
 		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	// 게시판 상세조회
+	public BoardVo selectBoardByNo(Connection conn, String no) throws SQLException {
+
+		// sql 
+		String sql = "SELECT B.NO , B.CATEGORY_NO , C.NAME AS CATEGORY_NAME , B.TITLE , B.CONTENT , B.WRITER_NO , B.HIT , B.ENROLL_DATE , B.MODIFY_DATE , B.STATUS , M.NICK FROM BOARD B JOIN MEMBER M ON M.NO = B.WRITER_NO JOIN CATEGORY C ON B.CATEGORY_NO = C.NO WHERE B.NO = ? AND B.STATUS = 'O'";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, no);
+		ResultSet rs = pstmt.executeQuery();
+		
+		// rs
+		BoardVo vo = null;
+		if(rs.next()) {
+			String categoryNo = rs.getString("CATEGORY_NO");
+			String title = rs.getString("TITLE");
+			String content = rs.getString("CONTENT");
+			String writerNo = rs.getString("WRITER_NO");
+			String writerNick = rs.getString("NICK");
+			String hit = rs.getString("HIT");
+			String enrollDate = rs.getString("ENROLL_DATE");
+			String modifyDate = rs.getString("MODIFY_DATE");
+			String status = rs.getString("STATUS");
+			String categoryName = rs.getString("CATEGORY_NAME");
+			
+			vo = new BoardVo();
+			vo.setNo(no);
+			vo.setCategoryNo(categoryNo);
+			vo.setTitle(title);
+			vo.setContent(content);
+			vo.setWriterNo(writerNo);
+			vo.setWriterNick(writerNick);
+			vo.setHit(hit);
+			vo.setEnrollDate(enrollDate);
+			vo.setModifyDate(modifyDate);
+			vo.setStatus(status);
+			vo.setCategoryName(categoryName);
+		}
+		
+		// close
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+		
+		return vo;
+	}
+
+	// 조회수 증가
+	public int increaseHit(Connection conn, String no) throws Exception {
+
+		// sql
+		String sql = "UPDATE BOARD SET HIT = HIT + 1 WHERE NO = ? AND STATUS = 'O'";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, no);
+		int result = pstmt.executeUpdate();
+		
+		// close
+		JDBCTemplate.close(pstmt);
+		
+		return result;
+	}
+
+	// 게시글 삭제
+	public int delete(Connection conn, String no, String memberNo) throws Exception {
+		
+		// sql
+		String sql = "UPDATE BOARD SET STATUS = 'X' WHERE NO = ? AND WRITER_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, no);
+		pstmt.setString(2, memberNo);
+		int result = pstmt.executeUpdate();
+		
+		// close
+		JDBCTemplate.close(pstmt);
 		
 		return result;
 	}

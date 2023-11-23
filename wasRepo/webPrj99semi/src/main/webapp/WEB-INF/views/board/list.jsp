@@ -30,7 +30,7 @@
 				<thead>
 					<tr>
 						<th scope="col">글번호</th>
-						<th scope="col">카테고리 번호</th>
+						<th scope="col">카테고리</th>
 						<th scope="col">제목</th>
 						<th scope="col">작성자</th>
 						<th scope="col">조회수</th>
@@ -41,7 +41,7 @@
 					<% for(BoardVo vo : boardVoList){ %>
 					<tr>
 						<td class="agn_c"><%= vo.getNo() %></td>
-						<td class="agn_c"><%= vo.getCategoryNo() %></td>
+						<td class="agn_c"><%= vo.getCategoryName() %></td>
 						<td><%= vo.getTitle() %></td>
 						<td class="agn_c"><%= vo.getWriterNick() %></td>
 						<td class="agn_c"><%= vo.getHit() %></td>
@@ -51,22 +51,34 @@
 				</tbody>
 			</table>
 
+			<% if(loginMember != null){ %>
 			<div class="btn_box">
 				<button onclick="location.href='/app99/board/write'">글쓰기</button>
 			</div>
+			<% } %>
+			
 			
 			<ul class="paging">
-				<li><a href="">1</a></li>
-				<li><a href="">2</a></li>
-				<li><a href="">3</a></li>
-				<li><a href="">4</a></li>
-				<li><a href="">5</a></li>
+				<% for(int i = 0; i < 5; i++){ %>
+					<li><a href=""><%= i + 1 %></a></li>
+				<% } %>
 				<li><a href="">다음</a></li>
 			</ul>
 			
 		</main>
 		
 	</div>
+<script>
+	const trArr = document.querySelectorAll("main table tbody tr");
+	trArr.forEach(tr => {
+		tr.addEventListener('click', handleClick);
+	})
+	function handleClick(e){
+		const trTag = e.currentTarget;
+		const no = trTag.children[0].innerText;
+		location.href = '/app99/board/detail?no=' + no;
+	}
 
+</script>
 </body>
 </html>

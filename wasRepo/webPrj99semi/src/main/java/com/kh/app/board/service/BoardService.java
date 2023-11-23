@@ -47,4 +47,54 @@ public class BoardService {
 		return result;
 	}
 
+	// 게시글 상세조회 ( + 조회수 증가)
+	public BoardVo selectBoardByNo(String no) throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		BoardDao dao = new BoardDao();
+		int result = dao.increaseHit(conn, no);
+		BoardVo vo = null;
+		if(result == 1) {
+			vo = dao.selectBoardByNo(conn, no);
+		} 
+		
+		// tx
+		if(result == 1) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return vo;
+	}
+
+	// 게시글 삭제
+	public int delete(String no, String memberNo) throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		BoardDao dao = new BoardDao();
+		int result = dao.delete(conn, no, memberNo);
+		
+		// tx
+		if(result == 1) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
 }

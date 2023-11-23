@@ -32,7 +32,7 @@
 	                <button type="button" onclick="location.href='/app99/member/join';">회원가입</button>
             	<% } else { %>
             		<strong><%= loginMember.getMemberNick() %></strong>님 환영합니다!<br/>
-            		<button type="button" onclick="location.href='/app99/home'">로그아웃</button>
+            		<button type="button" onclick="location.href='/app99/member/logout'">로그아웃</button>
             	<% } %>
                 
             </div>
