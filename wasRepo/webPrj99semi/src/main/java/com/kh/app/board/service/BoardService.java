@@ -6,18 +6,19 @@ import java.util.List;
 import com.kh.app.board.dao.BoardDao;
 import com.kh.app.board.vo.BoardVo;
 import com.kh.app.db.util.JDBCTemplate;
+import com.kh.app.page.vo.PageVo;
 
 public class BoardService {
 
 	// 게시글 목록 조회
-	public List<BoardVo> selectBoardList() throws Exception {
+	public List<BoardVo> selectBoardList(PageVo pvo) throws Exception {
 		
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// dao
 		BoardDao dao = new BoardDao();
-		List<BoardVo> boardVoList = dao.selectBoardList(conn);
+		List<BoardVo> boardVoList = dao.selectBoardList(conn, pvo);
 		
 		// close
 		JDBCTemplate.close(conn);
@@ -96,5 +97,22 @@ public class BoardService {
 		
 		return result;
 	}
+
+	// 전체 게시글 갯수 조회
+	public int selectBoardCount() throws Exception {
+			
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		BoardDao dao = new BoardDao();
+		int cnt = dao.selectBoardCount(conn);
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return cnt;
+			
+	}//selectBoardCount
 
 }

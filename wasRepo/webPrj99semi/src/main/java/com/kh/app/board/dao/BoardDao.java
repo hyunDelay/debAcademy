@@ -9,46 +9,49 @@ import java.util.List;
 
 import com.kh.app.board.vo.BoardVo;
 import com.kh.app.db.util.JDBCTemplate;
+import com.kh.app.page.vo.PageVo;
 
 public class BoardDao {
 
 	// 게시글 목록 조회
-	public List<BoardVo> selectBoardList(Connection conn) throws Exception {
+	public List<BoardVo> selectBoardList(Connection conn, PageVo pvo) throws Exception {
 		
 		// sql
-		String sql = "SELECT B.NO , B.CATEGORY_NO , C.NAME AS CATEGORY_NAME , B.TITLE , B.CONTENT , B.WRITER_NO , B.HIT , B.ENROLL_DATE , B.MODIFY_DATE , B.STATUS , M.NICK FROM BOARD B JOIN MEMBER M ON M.NO = B.WRITER_NO JOIN CATEGORY C ON B.CATEGORY_NO = C.NO WHERE B.STATUS = 'O' ORDER BY B.NO DESC";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		ResultSet rs = pstmt.executeQuery();
+		String sql = "SELECT * FROM ( SELECT ROWNUM RNUM, T.* FROM ( SELECT B.NO ,B.CATEGORY_NO ,B.TITLE ,B.CONTENT ,B.WRITER_NO ,B.HIT ,B.ENROLL_DATE ,B.MODIFY_DATE ,B.STATUS ,M.NICK AS WRITER_NICK ,C.NAME AS CATEGORY_NAME FROM BOARD B JOIN MEMBER M ON B.WRITER_NO = M.NO JOIN CATEGORY C ON B.CATEGORY_NO = C.NO WHERE B.STATUS = 'O' ORDER BY NO DESC ) T ) WHERE RNUM BETWEEN ? AND ?";
+	    PreparedStatement pstmt = conn.prepareStatement(sql);
+	    pstmt.setInt(1, pvo.getStartRow());
+	    pstmt.setInt(2, pvo.getLastRow());
+	    ResultSet rs = pstmt.executeQuery();
 		
 		// rs
 		List<BoardVo> boardVoList = new ArrayList<BoardVo>();
 		while(rs.next()) {
-			String no = rs.getString("NO");
-			String categoryNo = rs.getString("CATEGORY_NO");
-			String title = rs.getString("TITLE");
-			String content = rs.getString("CONTENT");
-			String writerNo = rs.getString("WRITER_NO");
-			String writerNick = rs.getString("NICK");
-			String hit = rs.getString("HIT");
-			String enrollDate = rs.getString("ENROLL_DATE");
-			String modifyDate = rs.getString("MODIFY_DATE");
-			String status = rs.getString("STATUS");
-			String categoryName = rs.getString("CATEGORY_NAME");
-			
-			BoardVo vo = new BoardVo();
-			vo.setNo(no);
-			vo.setCategoryNo(categoryNo);
-			vo.setTitle(title);
-			vo.setContent(content);
-			vo.setWriterNo(writerNo);
-			vo.setWriterNick(writerNick);
-			vo.setHit(hit);
-			vo.setEnrollDate(enrollDate);
-			vo.setModifyDate(modifyDate);
-			vo.setStatus(status);
-			vo.setCategoryName(categoryName);
-			
-			boardVoList.add(vo);
+	         String no = rs.getString("NO");
+	         String categoryNo = rs.getString("CATEGORY_NO");
+	         String title = rs.getString("TITLE");
+	         String content = rs.getString("CONTENT");
+	         String writerNo = rs.getString("WRITER_NO");
+	         String writerNick = rs.getString("WRITER_NICK");
+	         String hit = rs.getString("HIT");
+	         String enrollDate = rs.getString("ENROLL_DATE");
+	         String modifyDate = rs.getString("MODIFY_DATE");
+	         String status = rs.getString("STATUS");
+	         String categoryName = rs.getString("CATEGORY_NAME");
+	         
+	         BoardVo vo = new BoardVo();
+	         vo.setNo(no);
+	         vo.setCategoryNo(categoryNo);
+	         vo.setTitle(title);
+	         vo.setContent(content);
+	         vo.setWriterNo(writerNo);
+	         vo.setWriterNick(writerNick);
+	         vo.setHit(hit);
+	         vo.setEnrollDate(enrollDate);
+	         vo.setModifyDate(modifyDate);
+	         vo.setStatus(status);
+	         vo.setCategoryName(categoryName);
+	         
+	         boardVoList.add(vo);
 		}
 		
 		// close
@@ -149,6 +152,27 @@ public class BoardDao {
 		JDBCTemplate.close(pstmt);
 		
 		return result;
+	}
+
+	// 게시글 개수 전체조회
+	public int selectBoardCount(Connection conn) throws Exception {
+		//SQL
+		String sql = "SELECT COUNT(*) as cnt FROM BOARD WHERE STATUS = 'O'";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		  
+		ResultSet rs = pstmt.executeQuery();
+		  
+		//rs
+		int cnt = 0;
+		if(rs.next()) {
+			cnt = rs.getInt(1); //첫번째 열을 가져오겠다 라는 뜻, 계산에 써야되기 때문에 String이 아닌 Int로 받아줌
+		}
+		  
+		  //close
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+		  
+		return cnt;
 	}
 
 

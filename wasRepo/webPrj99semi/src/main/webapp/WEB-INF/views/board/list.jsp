@@ -60,7 +60,7 @@
 			
 			<ul class="paging">
 				<% for(int i = 0; i < 5; i++){ %>
-					<li><a href=""><%= i + 1 %></a></li>
+					<li><a href="/app99/board/list?pno=1"><%= i + 1 %></a></li>
 				<% } %>
 				<li><a href="">다음</a></li>
 			</ul>

@@ -10,3 +10,6 @@ jdbcWorkspace/.metadata/
 setup/
 wasRepo/Servers/
 *.gitignore
+soloRepo/
+*.xml
+wasRepo/webPrj99semi/.metadata/
