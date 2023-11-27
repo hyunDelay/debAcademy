@@ -1,8 +1,10 @@
+<%@page import="com.kh.app.page.vo.PageVo"%>
 <%@page import="com.kh.app.board.vo.BoardVo"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	List<BoardVo> boardVoList = (List<BoardVo>) request.getAttribute("boardVoList");
+	PageVo pvo = (PageVo)request.getAttribute("pvo");
 %>
 <!DOCTYPE html>
 <html>
@@ -59,12 +61,22 @@
 			
 			
 			<ul class="paging">
-				<% for(int i = 0; i < 5; i++){ %>
-					<li><a href="/app99/board/list?pno=1"><%= i + 1 %></a></li>
+				<% if(pvo.getStartPage() != 1){ %>
+					<li><a href="/app99/board/list?pno=<%= pvo.getStartPage() - 1 %>">이전</a></li>
 				<% } %>
-				<li><a href="">다음</a></li>
+				
+				<% for(int i = pvo.getStartPage(); i < pvo.getEndPage() + 1; i++){ %>
+					<% if(pvo.getCurrentPage() == i){ %>
+						<li class="on"><a><%= i %></a></li>
+					<% } else { %>
+						<li><a href="/app99/board/list?pno=<%= i %>"><%= i %></a></li>
+					<% } %>
+				<% } %>
+				
+				<% if(pvo.getEndPage() != pvo.getMaxPage()){ %>
+					<li><a href="/app99/board/list?pno=<%= pvo.getEndPage() + 1 %>">다음</a></li>
+				<% } %>
 			</ul>
-			
 		</main>
 		
 	</div>
@@ -76,7 +88,7 @@
 	function handleClick(e){
 		const trTag = e.currentTarget;
 		const no = trTag.children[0].innerText;
-		location.href = '/app99/board/detail?no=' + no;
+		location.href = '/app99/board/detail?no=' + no + '&currPage=<%= pvo.getCurrentPage() %>';
 	}
 
 </script>

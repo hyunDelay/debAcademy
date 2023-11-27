@@ -30,6 +30,7 @@ public class BoardDetailController extends HttpServlet {
 			
 			// result == view
 			req.setAttribute("vo", vo);
+			req.setAttribute("currPage", req.getParameter("currPage"));
 			req.getRequestDispatcher("/WEB-INF/views/board/detail.jsp").forward(req, resp);
 			
 		} catch(Exception e) {

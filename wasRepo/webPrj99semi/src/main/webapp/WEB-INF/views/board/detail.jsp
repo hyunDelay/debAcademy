@@ -3,6 +3,7 @@
     pageEncoding="UTF-8"%>
 <%
 	BoardVo vo = (BoardVo) request.getAttribute("vo");
+	String currPage = (String) request.getAttribute("currPage");
 %>
 <!DOCTYPE html>
 <html>
@@ -45,7 +46,7 @@
             </table>
 
             <div class="btn_box">
-                <button onclick="location.href='/app99/board/list'">목록</button>
+                <button onclick="location.href='/app99/board/list?pno=<%= currPage %>'">목록</button>
                 <% if(loginMember != null && loginMember.getNo().equals(vo.getWriterNo())){ %>
                 <button onclick="location.href='/app99/board/delete?no=<%= vo.getNo() %>'">삭제</button>
                 <button onclick="location.href='/app99/board/edit?no=<%= vo.getNo() %>'">수정</button>
