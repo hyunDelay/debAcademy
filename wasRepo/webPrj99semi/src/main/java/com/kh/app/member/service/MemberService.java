@@ -67,4 +67,20 @@ public class MemberService {
 		return loginMember;
 	}
 
+	// 아이디 중복 체크
+	public boolean checkIdDup(String memberId) throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		MemberDao dao = new MemberDao();
+		boolean isOk = dao.checkIdDup(conn, memberId);
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return isOk;
+	}
+
 }

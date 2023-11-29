@@ -49,6 +49,10 @@
             color: rgb(189, 6, 6);
             font-weight: 900;
         }
+        .joinGroup li:first-child input[type=text] {
+        	width: calc(100% - 238px);
+        }
+        .joinGroup li:first-child input[type=button] {margin-left: 10px;}
     </style>
 </head>
 <body>
@@ -66,6 +70,7 @@
                     <li>
                         <label for="memberId">아이디<span class="req">*</span></label>
                         <input type="text" id="memberId" name="memberId">
+                        <input type="button" value="중복체크" onclick="checkId();">
                     </li>
                     <li>
                         <label for="memberPwd">비밀번호<span class="req">*</span></label>
@@ -132,7 +137,13 @@
 
 <script>
     function checkValidate(){
-
+		// 중복검사 통과 여부
+		if(!window.idOk){
+			alert("아이디 중복검사를 완료해주세요.");
+			document.querySelector('main input[name=memberId]').focus();
+			return false;
+		}
+    	
         // 아이디 길이
         const memberId = document.querySelector('main input[name=memberId]').value;
         const memberIdRegex = /^[a-z0-9]{4,12}$/;
@@ -185,6 +196,27 @@
         }
 
         return true;
+    }
+    
+    // 아이디 중복체크
+    function checkId(){
+    	
+    	const memberId = document.querySelector('main input[name="memberId"]').value;
+    	
+    	fetch("/app99/member/check/id?memberId=" + memberId)
+    	.then( (resp) => { return resp.json()} )
+    	.then((data) => {
+    		const result = data.msg;
+    		const isOk = result === "ok";
+    		if(isOk){
+        		alert("사용가능한 아이디 입니다.");
+        		window.idOk = true;
+        	} else {
+        		alert("사용 불가능한 아이디 입니다.");
+        		window.idOk = false;
+        	}
+    	});
+    	
     }
 </script>
 </body>
