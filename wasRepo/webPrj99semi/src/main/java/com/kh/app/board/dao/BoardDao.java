@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kh.app.board.vo.BoardVo;
+import com.kh.app.board.vo.CategoryVo;
 import com.kh.app.db.util.JDBCTemplate;
 import com.kh.app.page.vo.PageVo;
 
@@ -173,6 +174,52 @@ public class BoardDao {
 		JDBCTemplate.close(pstmt);
 		  
 		return cnt;
+	}
+	
+	// 카테고리 리스트 조회
+	public List<CategoryVo> getCategoryList(Connection conn) throws Exception {
+		
+		// sql
+		String sql = "SELECT * FROM CATEGORY ORDER BY NO";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		
+		// rs
+		List<CategoryVo> voList = new ArrayList<CategoryVo>();
+		while(rs.next()) {
+			String no = rs.getString("NO");
+			String name = rs.getString("NAME");
+			
+			CategoryVo categoryVo = new CategoryVo();
+			categoryVo.setNo(no);
+			categoryVo.setName(name);
+			
+			voList.add(categoryVo);
+		}
+		
+		// close
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+		
+		return voList;
+	}
+	
+	// 수정하기
+	public int updateBoardByNo(Connection conn, BoardVo vo) throws Exception {
+		
+		// sql
+		String sql = "UPDATE BOARD SET TITLE = ? , CONTENT = ? , CATEGORY_NO = ?, MODIFY_DATE = SYSDATE WHERE NO = ? AND STATUS = 'O'";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, vo.getTitle());
+		pstmt.setString(2, vo.getContent());
+		pstmt.setString(3, vo.getCategoryNo());
+		pstmt.setString(4, vo.getNo());
+		int result = pstmt.executeUpdate();
+		
+		// close
+		JDBCTemplate.close(pstmt);
+		
+		return result;
 	}
 
 

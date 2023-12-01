@@ -60,17 +60,6 @@ const fontArr = ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 
 	*/
 	function uploadWriteImageFile(file, editor) {
 		
-// 		$.ajax({
-			
-// 			url : "/app999/test" ,
-// 			method : "post",
-// 			success : function(x){
-// 				alert("x : "  + x );
-// 			}
-			
-			
-// 		});
-		
 		data = new FormData();
 		data.append("file", file);
 		$.ajax({
