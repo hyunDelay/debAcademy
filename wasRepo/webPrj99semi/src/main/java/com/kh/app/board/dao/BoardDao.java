@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.kh.app.board.vo.BoardVo;
 import com.kh.app.board.vo.CategoryVo;
@@ -220,6 +221,79 @@ public class BoardDao {
 		JDBCTemplate.close(pstmt);
 		
 		return result;
+	}
+
+	// 게시글 검색
+	public List<BoardVo> search(Connection conn, Map<String, String> m, PageVo pvo) throws Exception {
+		
+		// sql
+		String searchType = m.get("searchType");
+		
+		String sql = "SELECT * FROM ( SELECT ROWNUM RNUM, T.* FROM ( SELECT B.NO ,B.CATEGORY_NO ,B.TITLE ,B.CONTENT ,B.WRITER_NO ,B.HIT ,B.ENROLL_DATE ,B.MODIFY_DATE ,B.STATUS ,M.NICK AS WRITER_NICK ,C.NAME AS CATEGORY_NAME FROM BOARD B JOIN MEMBER M ON B.WRITER_NO = M.NO JOIN CATEGORY C ON B.CATEGORY_NO = C.NO WHERE B.STATUS = 'O' AND " + searchType + " LIKE '%' || ? || '%' ORDER BY NO DESC ) T ) WHERE RNUM BETWEEN ? AND ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, m.get("searchValue"));
+		pstmt.setInt(2, pvo.getStartRow());
+		pstmt.setInt(3, pvo.getLastRow());
+		ResultSet rs = pstmt.executeQuery();
+		
+		// rs
+		List<BoardVo> boardVoList = new ArrayList<BoardVo>();
+		while(rs.next()) {
+	         String no = rs.getString("NO");
+	         String categoryNo = rs.getString("CATEGORY_NO");
+	         String title = rs.getString("TITLE");
+	         String content = rs.getString("CONTENT");
+	         String writerNo = rs.getString("WRITER_NO");
+	         String writerNick = rs.getString("WRITER_NICK");
+	         String hit = rs.getString("HIT");
+	         String enrollDate = rs.getString("ENROLL_DATE");
+	         String modifyDate = rs.getString("MODIFY_DATE");
+	         String status = rs.getString("STATUS");
+	         String categoryName = rs.getString("CATEGORY_NAME");
+	         
+	         BoardVo vo = new BoardVo();
+	         vo.setNo(no);
+	         vo.setCategoryNo(categoryNo);
+	         vo.setTitle(title);
+	         vo.setContent(content);
+	         vo.setWriterNo(writerNo);
+	         vo.setWriterNick(writerNick);
+	         vo.setHit(hit);
+	         vo.setEnrollDate(enrollDate);
+	         vo.setModifyDate(modifyDate);
+	         vo.setStatus(status);
+	         vo.setCategoryName(categoryName);
+	         
+	         boardVoList.add(vo);
+		}
+		
+		// close
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+		
+		return boardVoList;
+	}
+
+	// 게시글 갯수 조회 (검색값에 따라)
+	public int getBoardCountBySearch(Connection conn, Map<String, String> m) throws Exception {
+		
+		// sql
+		String sql = "SELECT COUNT(*) FROM BOARD WHERE STATUS = 'O' AND " + m.get("searchType") + " LIKE '%' || ? || '%'";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, m.get("searchValue"));
+		ResultSet rs = pstmt.executeQuery();
+		
+		// rs
+		int cnt = 0;
+		if(rs.next()) {
+			cnt = rs.getInt(1);
+		}
+		
+		// close
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+		
+		return cnt;
 	}
 
 

@@ -4,6 +4,9 @@
 <%
 	BoardVo vo = (BoardVo) request.getAttribute("vo");
 	String currPage = (String) request.getAttribute("currPage");
+	if(currPage == null){
+		currPage = "1";
+	}
 %>
 <!DOCTYPE html>
 <html>

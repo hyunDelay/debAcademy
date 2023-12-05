@@ -1,3 +1,4 @@
+<%@page import="java.util.Map"%>
 <%@page import="com.kh.app.page.vo.PageVo"%>
 <%@page import="com.kh.app.board.vo.BoardVo"%>
 <%@page import="java.util.List"%>
@@ -5,6 +6,8 @@
 <%
 	List<BoardVo> boardVoList = (List<BoardVo>) request.getAttribute("boardVoList");
 	PageVo pvo = (PageVo)request.getAttribute("pvo");
+	
+	Map<String, String> searchMap = (Map<String, String>) request.getAttribute("searchMap");
 %>
 <!DOCTYPE html>
 <html>
@@ -20,6 +23,17 @@
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<main>
 			<h2>게시글 목록</h2>
+			
+			<div class="search-area">
+				<form action="/app99/board/search" method="get">
+					<select name="searchType">
+						<option value="title">제목</option>
+						<option value="content">내용</option>
+					</select>
+					<input type="text" name="searchValue" placeholder="검색할 내용을 입력하세요">
+					<input type="submit" value="검색">
+				</form>
+			</div>
 			
 			<table>
 				<colgroup>
@@ -81,6 +95,7 @@
 		
 	</div>
 <script>
+
 	const trArr = document.querySelectorAll("main table tbody tr");
 	trArr.forEach(tr => {
 		tr.addEventListener('click', handleClick);
@@ -90,6 +105,41 @@
 		const no = trTag.children[0].innerText;
 		location.href = '/app99/board/detail?no=' + no + '&currPage=<%= pvo.getCurrentPage() %>';
 	}
+	
+	<% if(searchMap != null){ %>
+		function setSearchArea(){
+
+			// 옵션태그 세팅
+			const optArr = document.querySelectorAll('.search-area form option');
+			const searchType = "<%= searchMap.get("searchType") %>";
+			for(let i = 0; i < optArr.length; i++){
+				if(optArr[i].value === searchType){
+					optArr[i].selected = true;
+					break;
+				}
+			}
+
+			// 인풋태그 세팅
+			const searchValueTag = document.querySelector('.search-area form input[name=searchValue]');
+			searchValueTag.value = "<%= searchMap.get("searchValue") %>";
+		}
+		setSearchArea();
+
+		function setPageArea(){
+			
+			const aTagArr = document.querySelectorAll('.paging a');
+			for(let i = 0; i < aTagArr.length; i++){
+				aTagArr[i].href = aTagArr[i].href.replace("list", "search");
+				aTagArr[i].href += "&searchType=<%= searchMap.get("searchType") %>";
+				aTagArr[i].href += "&searchValue=<%= searchMap.get("searchValue") %>";
+			}
+			
+		}
+		setPageArea();
+	<% } %>
+
+	
+	
 
 </script>
 </body>

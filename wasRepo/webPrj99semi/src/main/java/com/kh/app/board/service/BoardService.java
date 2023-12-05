@@ -129,6 +129,8 @@ public class BoardService {
 		BoardVo vo = dao.selectBoardByNo(conn, no);
 		List<CategoryVo> cateVoList = dao.getCategoryList(conn);
 		
+		
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("vo", vo);
 		map.put("categoryVoList", cateVoList);
@@ -176,6 +178,38 @@ public class BoardService {
 		JDBCTemplate.close(conn);
 		
 		return result;
+	}
+
+	// 게시글 검색
+	public List<BoardVo> search(Map<String, String> m, PageVo pvo) throws Exception {
+
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		BoardDao dao = new BoardDao();
+		List<BoardVo> boardVoList = dao.search(conn, m, pvo);
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return boardVoList;
+	}
+
+	// 게시글 갯수 조회 (검색값에 따라)
+	public int selectSearchBoardCount(Map<String, String> m) throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		BoardDao dao = new BoardDao();
+		int cnt = dao.getBoardCountBySearch(conn, m);
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return cnt;
 	}
 
 }

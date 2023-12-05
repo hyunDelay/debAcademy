@@ -70,3 +70,36 @@ table tr td select {
     box-sizing: border-box;
     border: 1px solid #aaa;
 }
+.search-area form {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	justify-content: center;
+	padding: 20px 0;
+}
+.search-area form select {
+	display: flex;
+	padding: 0 10px;
+	border: 1px solid #333;
+	box-sizing: border-box;
+	align-items: center;
+	height: 38px;
+}
+.search-area form input[type=text] {
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	border: 1px solid #333;
+	box-sizing: border-box;
+	height: 38px;
+}
+.search-area form input[type=submit] {
+	display: flex;
+	padding: 10px 20px;
+	background-color: #333;
+	box-sizing: border-box;
+	border: none;
+	font-size: 14px;
+	color: #fff;
+	cursor: pointer;
+}
