@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>promise</title>
+</head>
+<body>
+    <h1>프로미스</h1>
+
+    <script>
+
+        new Promise((resolve, reject) => {
+            console.log('할일~~~');
+            resolve();// 작업성공으로 변경
+        })
+        .then(() => {
+            console.log('헬로');
+        })
+        .catch(() => {
+            console.log('바이');
+        });
+    </script>
+</body>
+</html>
