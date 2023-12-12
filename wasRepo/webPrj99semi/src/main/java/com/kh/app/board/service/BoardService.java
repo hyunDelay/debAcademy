@@ -8,6 +8,7 @@ import java.util.Map;
 import com.kh.app.board.dao.BoardDao;
 import com.kh.app.board.vo.BoardVo;
 import com.kh.app.board.vo.CategoryVo;
+import com.kh.app.board.vo.ReplyVo;
 import com.kh.app.db.util.JDBCTemplate;
 import com.kh.app.page.vo.PageVo;
 
@@ -51,8 +52,8 @@ public class BoardService {
 		return result;
 	}
 
-	// 게시글 1개 조회 ( + 조회수 증가)
-	public BoardVo selectBoardByNo(String no) throws Exception {
+	// 게시글 상세 조회 ( + 조회수 증가)
+	public Map<String, Object> selectBoardByNo(String no) throws Exception {
 		
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
@@ -65,6 +66,10 @@ public class BoardService {
 			vo = dao.selectBoardByNo(conn, no);
 		} 
 		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("vo", vo);
+		
 		// tx
 		if(result == 1) {
 			JDBCTemplate.commit(conn);
@@ -75,7 +80,7 @@ public class BoardService {
 		// close
 		JDBCTemplate.close(conn);
 		
-		return vo;
+		return map;
 	}
 
 	// 게시글 삭제
@@ -211,5 +216,23 @@ public class BoardService {
 		
 		return cnt;
 	}
+
+	// 댓글 목록 조회
+	public List<ReplyVo> getReplyList(String refNo) throws Exception {
+
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		BoardDao dao = new BoardDao();
+		List<ReplyVo> replyVoList = dao.getReplyList(conn, refNo);
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return replyVoList;
+	}
+	
+	
 
 }

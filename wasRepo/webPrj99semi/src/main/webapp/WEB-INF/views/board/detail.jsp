@@ -55,8 +55,26 @@
                 <button onclick="location.href='/app99/board/edit?no=<%= vo.getNo() %>'">수정</button>
                 <% } %>
             </div>
+            
+            댓글들 :::
+            <div id="replyArea"></div>
+            
         </main>
 
     </div>
+    <script>
+    	function getReplyList(refNo){
+    		fetch("/app99/board/reply/list?refNo=" + refNo)
+    		.then( (resp) => { return resp.json() } )
+    		.then( (data) => { console.log(data) } )
+    		.catch(() => { alert("댓글불러오기 실패") });
+    	}
+    	getReplyList(1);
+    	function setReplyArea(){
+    		const divTag = document.querySelector('#replyArea');
+    		const replyVoList = getReplyList(1); // 변수를 이용해서 바꿔줄 예정
+    		divTag.innerHTML = replyVoList;
+    	}
+    </script>
 </body>
 </html>

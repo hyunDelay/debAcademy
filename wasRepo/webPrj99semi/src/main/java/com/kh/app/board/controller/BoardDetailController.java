@@ -1,6 +1,8 @@
 package com.kh.app.board.controller;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kh.app.board.service.BoardService;
 import com.kh.app.board.vo.BoardVo;
+import com.kh.app.board.vo.ReplyVo;
 import com.kh.app.member.vo.MemberVo;
 
 @WebServlet("/board/detail")
@@ -26,7 +29,8 @@ public class BoardDetailController extends HttpServlet {
 			
 			// service
 			BoardService bs = new BoardService();
-			BoardVo vo = bs.selectBoardByNo(no);
+			Map<String, Object> map = bs.selectBoardByNo(no);
+			BoardVo vo = (BoardVo) map.get("vo");
 			
 			// result == view
 			req.setAttribute("vo", vo);

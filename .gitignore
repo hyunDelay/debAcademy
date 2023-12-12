@@ -13,3 +13,5 @@ wasRepo/Servers/
 soloRepo/
 *.xml
 wasRepo/webPrj99semi/.metadata/
+webPrj21ajax/src/main/webapp/META-INF/
+webPrj19upload/src/main/webapp/META-INF/
