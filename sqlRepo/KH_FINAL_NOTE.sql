@@ -1,0 +1,66 @@
+-- 연습
+-- 게시글 목록 조회
+SELECT * FROM BOARD;
+-- 게시글 상세 조회
+SELECT * FROM BOARD WHERE NO = 1;
+-- 게시글 삭제
+DELETE FROM BOARD WHERE NO = 1;
+ROLLBACK;
+-- 게시글 수정
+UPDATE BOARD
+SET TITLE = '새로운 제목', CONTENT = '새로운 내용'
+WHERE NO = 1;
+ROLLBACK;
+
+-- 멤버
+-- 회원가입
+INSERT INTO MEMBER(NO, ID, PWD, NICK)
+VALUES(SEQ_MEMBER_NO.NEXTVAL, ?, ?, ?);
+
+-- 회원 목록 조회
+SELECT * FROM MEMBER;
+
+-- 회원 상세 조회
+SELECT * FROM MEMBER WHERE NO = 1;
+
+-- 회원 삭제
+DELETE FROM MEMBER WHERE NO = ?;
+rollback;
+
+-- 회원 수정
+UPDATE 
+SET 
+    PWD = ?
+    , NICK = ?
+WHERE ID = ?
+AND PWD = ?
+;
+
+-- 데이터
+INSERT INTO MEMBER(NO, ID, PWD, NICK)
+VALUES(SEQ_MEMBER_NO.NEXTVAL, 'user01', '1234', '닉네임1');
+INSERT INTO MEMBER(NO, ID, PWD, NICK)
+VALUES(SEQ_MEMBER_NO.NEXTVAL, 'user02', '1234', '닉네임2');
+INSERT INTO MEMBER(NO, ID, PWD, NICK)
+VALUES(SEQ_MEMBER_NO.NEXTVAL, 'user03', '1234', '닉네임3');
+INSERT INTO MEMBER(NO, ID, PWD, NICK)
+VALUES(SEQ_MEMBER_NO.NEXTVAL, 'user04', '1234', '닉네임4');
+INSERT INTO MEMBER(NO, ID, PWD, NICK)
+VALUES(SEQ_MEMBER_NO.NEXTVAL, 'user05', '1234', '닉네임5');
+commit;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

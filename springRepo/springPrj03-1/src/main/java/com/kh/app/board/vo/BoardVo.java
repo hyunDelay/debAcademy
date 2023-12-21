@@ -44,7 +44,6 @@ public class BoardVo {
 	}
 	public BoardVo() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 }
