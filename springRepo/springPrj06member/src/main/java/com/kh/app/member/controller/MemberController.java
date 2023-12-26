@@ -3,6 +3,7 @@ package com.kh.app.member.controller;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,11 +29,15 @@ public class MemberController {
 	
 	// 회원 목록 조회
 	@GetMapping("list")
-	public void list() {
+	public void list(Model model) {
 		List<MemberVo> voList = service.list();
+		
 		for (MemberVo vo : voList) {
 			System.out.println(vo);
 		}
+		
+		// 화면에 데이터 전달
+		model.addAttribute("model", voList);
 	}
 	
 	// 회원 상세 조회
