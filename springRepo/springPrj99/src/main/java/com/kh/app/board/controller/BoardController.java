@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.app.board.service.BoardService;
 import com.kh.app.board.vo.BoardVo;
@@ -34,13 +35,21 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
-	// 게시글 목록 조회
+	// 게시글 목록 조회 (data를 jsp에 넘겨서 화면(data+view) 다 만들어줌)
 	@GetMapping("list")
 	public String list(Model model) {
 		List<BoardVo> voList = service.list();
 		model.addAttribute("boardVoList", voList);
-		System.out.println(voList);
+		
 		return "board/list";
+	}
+	
+	// 게시글 목록 조회 (json형태 응답)
+	@GetMapping("rest/list")
+	@ResponseBody
+	public List<BoardVo> restList() {
+		List<BoardVo> voList = service.list();
+		return voList;
 	}
 	
 	// 게시글 상세 조회 (번호)
