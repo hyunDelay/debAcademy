@@ -26,6 +26,9 @@ public class MemberRestController {
 	
 	@PostMapping("join")
 	public Map<String, String> join(@RequestBody MemberVo vo) throws Exception {
+		
+		Thread.sleep(3000);
+		
 		int result = service.join(vo);
 		
 		Map<String, String> map = new HashMap<String, String>();
@@ -37,4 +40,21 @@ public class MemberRestController {
 		
 		return map;
 	}
+	
+	@PostMapping("login")
+	public Map<String, Object> login(@RequestBody MemberVo vo) throws Exception {
+		System.out.println(vo);
+		MemberVo loginMember = service.login(vo);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if(loginMember == null) {
+			map.put("msg", "bad");
+		} 
+		map.put("msg", "good");	
+		map.put("loginMember", loginMember);
+		System.out.println("마지막 :" + loginMember);
+		
+		return map;
+	} 
 }

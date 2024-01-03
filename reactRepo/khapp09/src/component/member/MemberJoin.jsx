@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const StyledJoinDiv = styled.div`
     width: 100%;
@@ -19,16 +20,34 @@ const StyledJoinDiv = styled.div`
 
 const MemberJoin = () => {
 
+    const navigate = useNavigate();
+
+    let isFetching = false;
+    const [vo, setVo] = useState({
+        id: '',
+        pwd: '',
+        nick: ''
+    });
+
+    const handleInputChange = (e) => {
+        const {name, value} = e.target;
+        setVo({
+            ...vo,
+            [name]: value,
+        });
+    }
+
     const handleJoinSubmit = (e) => {
         e.preventDefault();
 
-        const vo = {};
-        // vo.id = document.querySelector('input[name=id]').value;
-        // vo.pwd = document.querySelector('input[name=pwd]').value;
-        // vo.nick = document.querySelector('input[name=nick]').value;
-        vo.id = 'user01023';
-        vo.pwd = '1234';
-        vo.nick = 'nick';
+        // 이미 작업중일 때 검증
+        if(isFetching){
+            return;
+        }
+
+        // 작업 시작
+        isFetching = true;
+
 
         fetch('http://127.0.0.1:8888/app/rest/member/join', {
             method: 'post',
@@ -37,11 +56,28 @@ const MemberJoin = () => {
             },
             body: JSON.stringify(vo)
         })
-        .then( resp => resp.json() )
-        .then( data => {
-            console.log('서버한테 응답받은 data :::');
-            console.log(data);
+        .then( resp => {
+            if(!resp.ok){
+                throw new Error('회원가입 fetch 실패');
+            }
+            return resp.json();
         } )
+        .then( data => {
+            if(data.msg === 'good'){
+                alert('회원가입이 완료되었습니다.');
+                navigate("/");
+            } else {
+                alert('회원가입이 실패하였습니다.');
+                navigate("/");
+            }
+        } )
+        .catch((e) => {
+            console.log(e);
+            alert('회원가입 실패');
+        })
+        .finally(() => {
+            isFetching = false;
+        })
         ;
     }
 
@@ -52,15 +88,15 @@ const MemberJoin = () => {
                     <tbody>
                         <tr>
                             <td>아이디</td>
-                            <td><input type="text" name='id'/></td>
+                            <td><input type="text" name='id' onChange={handleInputChange}/></td>
                         </tr>
                         <tr>
                             <td>패스워드</td>
-                            <td><input type="password" name='pwd'/></td>
+                            <td><input type="password" name='pwd' onChange={handleInputChange}/></td>
                         </tr>
                         <tr>
                             <td>닉네임</td>
-                            <td><input type="text" name='nick'/></td>
+                            <td><input type="text" name='nick' onChange={handleInputChange}/></td>
                         </tr>
                         <tr>
                             <td><input type="reset" /></td>
