@@ -33,7 +33,10 @@ public class MemberService {
 	}
 
 	// 로그인
-	public MemberVo login(MemberVo vo) {
+	public MemberVo login(MemberVo vo) throws Exception {
+		if(vo.getId() == null || vo.getId().isEmpty()) {
+			throw new Exception("빈값입니다.");
+		}
 		return dao.login(sst, vo);
 	}
 
