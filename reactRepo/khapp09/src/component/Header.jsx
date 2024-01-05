@@ -40,9 +40,13 @@ const StyledLoginAreaDiv = styled.div`
 const Header = () => {
     
     let isFetching = false;
-    const [loginMemberVo, setLoginMemberVo] = useState(null); // 로그인멤버 객체 준비
     // navi 객체 준비
     const navigate = useNavigate();
+    
+    const jsonStr = sessionStorage.getItem('loginMemberVo');
+    const sessionLoginMemberVo = JSON.parse(jsonStr);
+    const [loginMemberVo, setLoginMemberVo] = useState(sessionLoginMemberVo); // 로그인멤버 객체 준비
+    
     // 이 함수를 호출하면 브라우저의 주소가 변경
     const handleClickJoin = () => {
         navigate('/member/join');
@@ -91,7 +95,8 @@ const Header = () => {
         .then((data) => {
             if(data.msg === 'good'){
                 alert('로그인 성공!');
-                setLoginMemberVo(data.loginMember);
+                sessionStorage.setItem('loginMemberVo', JSON.stringify(data.loginMemberVo));
+                setLoginMemberVo(data.loginMemberVo);
             } else {
                 alert('로그인 실패');
             }
@@ -125,7 +130,10 @@ const Header = () => {
                 : 
                 <div>
                     <h3>{loginMemberVo.nick}님 환영합니다.</h3>
-                    <button>로그아웃</button>
+                    <button onClick={() => {
+                        sessionStorage.removeItem('loginMemberVo');
+                        setLoginMemberVo(null);
+                    }}>로그아웃</button>
                 </div>
             }
             

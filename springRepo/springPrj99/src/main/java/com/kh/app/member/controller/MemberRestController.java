@@ -44,7 +44,7 @@ public class MemberRestController {
 	}
 	
 	@PostMapping("login")
-	public Map<String, Object> login(@RequestBody MemberVo vo, HttpSession session) throws Exception {
+	public Map<String, Object> login(@RequestBody MemberVo vo) throws Exception {
 		System.out.println(vo);
 		MemberVo loginMember = service.login(vo);
 		
@@ -54,10 +54,7 @@ public class MemberRestController {
 			map.put("msg", "bad");
 		} 
 		map.put("msg", "good");	
-		map.put("loginMember", loginMember);
-		System.out.println("마지막 :" + loginMember);
-		
-		session.setAttribute("loginMember", loginMember);
+		map.put("loginMemberVo", loginMember);
 		
 		return map;
 	} 

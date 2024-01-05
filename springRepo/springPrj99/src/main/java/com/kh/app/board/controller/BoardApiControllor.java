@@ -40,14 +40,9 @@ public class BoardApiControllor {
 	@PostMapping("write")
 	public Map<String, String> write(@RequestBody BoardVo vo, HttpSession session) {
 		
-		vo.setWriterNo("1");
-		System.out.println(vo.getTitle());
-		System.out.println(vo.getContent());
-		System.out.println(vo.getWriterNo());
 		Map<String, String> map = new HashMap<String, String>();
 		
 		int result = service.insert(vo);
-		System.out.println("작성확인" + result);
 		
 		if(result == 1) {
 			map.put("msg", "good");

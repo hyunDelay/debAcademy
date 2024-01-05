@@ -19,9 +19,12 @@ const StyledBoardWriteDiv = styled.div`
 
 const BoardWrite = () => {
 
+    const str = sessionStorage.getItem('loginMemberVo');
+    const vo = JSON.parse(str);
+    const writerNo = vo.no;
+
     const [boardVo, setBoardVo] = useState({
-        title: '',
-        content: '',
+        "writerNo": writerNo,
     });
     const navigate = useNavigate();
 
