@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="file" id="fileTag">
+    <img src="" alt="" id="previewImgTag">
+<script>
+    const fileTag = document.querySelector('#fileTag');
+    const previewImgTag = document.querySelector('#previewImgTag');
+
+    fileTag.addEventListener('change', function(e){
+        console.log(e);
+
+        const fr = new FileReader();
+        fr.addEventListener('load', (j) => {
+            previewImgTag.src = j.target.result;
+        });
+        fr.readAsDataURL(fileTag.files[0]);
+
+    });
+</script>
+</body>
+</html>

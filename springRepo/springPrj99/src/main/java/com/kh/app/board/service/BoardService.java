@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
 import com.kh.app.board.dao.BoardDao;
+import com.kh.app.board.dao.BoardDaoOracle;
 import com.kh.app.board.vo.BoardVo;
 import com.kh.app.member.dao.MemberDao;
 
